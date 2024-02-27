@@ -5,15 +5,16 @@ const resend = new Resend(process.env.NEXT_PUBLIC_RESEND_API_KEY);
 
 export async function POST(request: Request) {
   const reqParams = await request.json();
+  const { name, email, toEmails, message } = reqParams;
   try {
     const data = await resend.emails.send({
-      from: "John Doe <johndoe@xyz.com>",
-      to: ["<Receiver Email>"],
+      from: name + "<" + email + ">",
+      to: toEmails,
       subject: "Hello World",
       react: EmailTemplate({
-        name: reqParams.name,
-        email: reqParams.email,
-        message: reqParams.message,
+        name: name,
+        email: email,
+        message: message,
       }),
     });
 

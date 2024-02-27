@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 export type FormData = {
   name: string;
   email: string;
+  toEmail: string;
   message: string;
 };
 
@@ -21,13 +22,19 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(false);
 
   const onSubmit = (data: FormData) => {
+    const toEmails = data.toEmail.split(", ");
     setIsLoading(true);
     fetch("/api/sendMail", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify({
+        name: data.name,
+        email: data.email,
+        toEmails,
+        message: data.message,
+      }),
     }).then((data) => {
       data.json().then((resp) => {
         setIsLoading(false);
@@ -55,7 +62,7 @@ export default function Home() {
         </div>
       </div>
       <div className="w-full grow flex justify-center py-28">
-        <div className="w-full max-w-[40rem] bg-zinc-800 px-14 py-10 rounded-lg max-h-[35rem]">
+        <div className="w-full max-w-[40rem] bg-zinc-800 px-14 py-10 rounded-lg max-h-[42rem]">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="mb-5">
               <label
@@ -83,6 +90,20 @@ export default function Home() {
                 placeholder="example@domain.com"
                 className="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
                 {...register("email", { required: true })}
+              />
+            </div>
+            <div className="mb-5">
+              <label
+                htmlFor="toEmail"
+                className="mb-3 block text-base font-light text-white"
+              >
+                To Email Address
+              </label>
+              <input
+                type="toEmail"
+                placeholder="example1@domain.com, example2@domain.com, ..."
+                className="w-full rounded-md border border-gray-300 bg-white py-3 px-6 text-base font-medium text-gray-700 outline-none focus:border-purple-500 focus:shadow-md"
+                {...register("toEmail", { required: true })}
               />
             </div>
             <div className="mb-5">
