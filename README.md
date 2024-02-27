@@ -2,6 +2,8 @@
 
 A Proof of Concept to Learn and Test the use of the Resend Email API using Next JS.
 
+![UI](https://github.com/prtkgoswami/resend-mail-send-poc/blob/main/public/Screenshot%202024-02-27%20at%2008-54-52%20Resend%20Email%20POC.png)
+
 ## Tech Stack
 
 - [Next.js](https://nextjs.org/): A React framework for building server-side rendered and static web applications.
