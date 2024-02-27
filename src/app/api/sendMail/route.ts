@@ -16,6 +16,7 @@ export async function POST(request: Request) {
         email: email,
         message: message,
       }),
+      text: "",
     });
 
     return Response.json(data);
